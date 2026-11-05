@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # LineageOS 20.0 for the Meizu M5 Note (M1621) on a fresh Ubuntu 22.04 or
-# 24.04 server, as root. Needs >= 300 GB free in the build directory and
+# 24.04 server, as root. Needs >= 260 GB free in the build directory and
 # >= 16 GB RAM. Installs the build packages, syncs LineageOS 20.0 with the
-# M1621 local manifest and builds the flashable zip.
+# M1621 local manifest and builds the flashable zip. Without ccache (one
+# build) source (--depth=1) and out/ take about 230-260 GB; CCACHE=1 adds
+# a 50 GB cache for repeated builds.
 #
 #   curl -LO https://raw.githubusercontent.com/davemmi/android_device_meizu_m3note/lineage-20.0-m1621/tools/build_m1621_cloud.sh
 #   bash build_m1621_cloud.sh                 # builds in /root/los
@@ -19,7 +21,7 @@ set -euo pipefail
 
 TOP=${TOP:-/root/los}
 MANIFEST=https://raw.githubusercontent.com/davemmi/android_device_meizu_m3note/lineage-20.0-m1621/m1621.xml
-NEED_GB=300
+NEED_GB=${NEED_GB:-$([ "${CCACHE:-0}" = 1 ] && echo 300 || echo 260)}
 
 if [ "${1:-}" != "--inside" ]; then
     mkdir -p "$TOP"
@@ -51,7 +53,7 @@ if [ "${1:-}" != "--inside" ]; then
         fallocate -l 16G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
     fi
     cp "$0" "$TOP/build_m1621_cloud.sh"
-    tmux new-session -d -s los "TOP=$TOP bash $TOP/build_m1621_cloud.sh --inside 2>&1 | tee -a $TOP/build.log; echo; echo 'Ende (Erfolg oder Fehler, siehe oben). Enter schliesst die Sitzung.'; read"
+    tmux new-session -d -s los "TOP=$TOP CCACHE=${CCACHE:-0} bash $TOP/build_m1621_cloud.sh --inside 2>&1 | tee -a $TOP/build.log; echo; echo 'Ende (Erfolg oder Fehler, siehe oben). Enter schliesst die Sitzung.'; read"
     echo "Build laeuft in der tmux-Sitzung 'los' (tmux attach -t los), Log: $TOP/build.log"
     exit 0
 fi
@@ -66,8 +68,10 @@ curl -fsSL -o .repo/local_manifests/m1621.xml "$MANIFEST"
 repo sync -c -j"$(nproc)" --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
 date
 
-export USE_CCACHE=1 CCACHE_EXEC=/usr/bin/ccache
-ccache -M 50G >/dev/null
+if [ "${CCACHE:-0}" = 1 ]; then
+    export USE_CCACHE=1 CCACHE_EXEC=/usr/bin/ccache
+    ccache -M 50G >/dev/null
+fi
 set +u    # envsetup.sh and lunch read unset variables
 source build/envsetup.sh
 breakfast m3note
