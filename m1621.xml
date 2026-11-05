@@ -8,4 +8,7 @@
   <project path="device/meizu/m3note" name="android_device_meizu_m3note" remote="m1621" revision="lineage-20.0-m1621" />
   <project path="kernel/meizu/m681" name="android_kernel_mt6755" remote="m1621" revision="lineage-20.0-m1621" />
   <project path="vendor/meizu/m3note" name="android_vendor_meizu_m3note" remote="remeizu" revision="lineage-20.0" />
+  <!-- MediaTek Wi-Fi HAL and wpa_supplicant driver lib (libwifi-hal-mt66xx,
+       lib_driver_cmd_mt66xx) for BOARD_WLAN_DEVICE := MediaTek -->
+  <project path="hardware/mediatek/wlan" name="nashc-dev/android_hardware_mediatek_wlan" remote="github" revision="lineage-20" />
 </manifest>
