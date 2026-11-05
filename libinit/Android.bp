@@ -2,5 +2,8 @@ cc_library_static {
     name: "libinit_m3note_profiles",
     recovery_available: true,
     srcs: ["init_m3note.cpp", "profile.cpp"],
-    static_libs: ["libbase", "libcrypto_static"],
+    // Linked into init (TARGET_INIT_VENDOR_LIB), whose init_defaults link
+    // libbase and libcrypto shared. libcrypto_static has no recovery
+    // variant ("missing variant" in soong).
+    shared_libs: ["libbase", "libcrypto"],
 }

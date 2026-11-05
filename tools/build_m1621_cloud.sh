@@ -28,7 +28,8 @@ if [ "${1:-}" != "--inside" ]; then
     free_gb=$(df -BG --output=avail "$TOP" | tail -1 | tr -dc 0-9)
     mem_gb=$(free -g | awk '/^Mem:/ {print $2}')
     echo "Build directory $TOP: $free_gb GB free; RAM $mem_gb GB; $(nproc) CPUs"
-    if [ "$free_gb" -lt "$NEED_GB" ]; then
+    # a rerun on a synced tree needs only the room for out/
+    if [ ! -d "$TOP/.repo" ] && [ "$free_gb" -lt "$NEED_GB" ]; then
         echo "ABBRUCH: zu wenig Platz in $TOP ($free_gb GB, gebraucht ca. $NEED_GB GB)."
         echo "Ein Volume (z. B. 350 GB) anhängen, mounten und mit TOP=<mountpunkt>/los erneut starten."
         exit 1
@@ -62,6 +63,7 @@ if [ "${1:-}" != "--inside" ]; then
         fallocate -l 16G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
     fi
     cp "$0" "$TOP/build_m1621_cloud.sh"
+    tmux kill-session -t los 2>/dev/null || true
     tmux new-session -d -s los "TOP=$TOP CCACHE=${CCACHE:-0} bash $TOP/build_m1621_cloud.sh --inside 2>&1 | tee -a $TOP/build.log; echo; echo 'Ende (Erfolg oder Fehler, siehe oben). Enter schliesst die Sitzung.'; read"
     echo "Build laeuft in der tmux-Sitzung 'los' (tmux attach -t los), Log: $TOP/build.log"
     exit 0
