@@ -63,12 +63,14 @@ cc_library_shared {
         "-Wno-unused-parameter",
     ],
 }
-// AudioSystem::getDeviceConnectionState for audio.primary.mt6755.so, added to
-// it by TARGET_LD_SHIM_LIBS (BoardConfig.mk); see audiosystem_n.cpp.
+// Nougat AudioSystem symbols for audio.primary.mt6755.so and
+// libaudio_param_parser.so, added to them by TARGET_LD_SHIM_LIBS (BoardConfig.mk); see audiosystem_n.cpp.
 cc_library_shared {
     name: "libm3note_n_audio",
     vendor: true,
     srcs: ["audiosystem_n.cpp"],
+    header_libs: ["libutils_headers"],
+    shared_libs: ["libutils"],
 }
 // libmedia.so under its real name, empty: audio.primary.mt6755.so (lib, lib64)
 // needs it, and with full Treble the vendor namespace cannot reach the system

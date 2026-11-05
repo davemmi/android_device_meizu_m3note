@@ -152,6 +152,14 @@ TARGET_LD_SHIM_LIBS += \
     /system/vendor/lib/hw/audio.primary.mt6755.so|/system/vendor/lib/libm3note_n_audio.so \
     /system/vendor/lib64/hw/audio.primary.mt6755.so|/system/vendor/lib64/libm3note_n_audio.so
 
+# AudioSystem::get/setParameters for the MTK audio parameter parser (AppOps),
+# dlopened by audio.primary.mt6755.so; see shims/audiosystem_n.cpp.
+TARGET_LD_SHIM_LIBS += \
+    /vendor/lib/libaudio_param_parser.so|/vendor/lib/libm3note_n_audio.so \
+    /vendor/lib64/libaudio_param_parser.so|/vendor/lib64/libm3note_n_audio.so \
+    /system/vendor/lib/libaudio_param_parser.so|/system/vendor/lib/libm3note_n_audio.so \
+    /system/vendor/lib64/libaudio_param_parser.so|/system/vendor/lib64/libm3note_n_audio.so
+
 # RIL shims: ifc_ccmni_md_cfg / ifc_set_txq_state for mtk-ril.so and the
 # cutils jstring functions for librilmtk.so.
 TARGET_LD_SHIM_LIBS += \
