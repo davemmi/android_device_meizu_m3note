@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Meizu M5 Note (M1621) - LineageOS 20.0, on the M3 Note tree -->
+<manifest>
+  <remote name="remeizu" fetch="https://github.com/nomorecoolnicknames" />
+  <remote name="m1621" fetch="https://github.com/davemmi" />
+
+  <project path="device/meizu/common" name="android_device_meizu_common" remote="remeizu" revision="lineage-20.0" />
+  <project path="device/meizu/m3note" name="android_device_meizu_m3note" remote="m1621" revision="lineage-20.0-m1621" />
+  <project path="kernel/meizu/m681" name="android_kernel_mt6755" remote="m1621" revision="lineage-20.0-m1621" />
+  <project path="vendor/meizu/m3note" name="android_vendor_meizu_m3note" remote="remeizu" revision="lineage-20.0" />
+</manifest>

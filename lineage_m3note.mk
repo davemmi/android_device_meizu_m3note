@@ -6,7 +6,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 PRODUCT_NAME := lineage_m3note
 PRODUCT_DEVICE := m3note
 PRODUCT_BRAND := Meizu
-PRODUCT_MODEL := M3 Note
+PRODUCT_MODEL := M5 Note
 PRODUCT_MANUFACTURER := Meizu
 PRODUCT_SHIPPING_API_LEVEL := 22
 # Full Treble: without it linkerconfig uses the legacy single namespace, and

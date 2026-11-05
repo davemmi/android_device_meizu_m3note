@@ -1,3 +1,31 @@
+# Meizu M5 Note (M1621) on the M3 Note tree
+
+Branch `lineage-20.0-m1621` builds this tree for the Meizu M5 Note (M1621,
+MT6755, same Wingtech design as the M681):
+
+- kernel: [davemmi/android_kernel_mt6755](https://github.com/davemmi/android_kernel_mt6755)
+  `lineage-20.0-m1621`, `m5note_defconfig` (DT `mz6755_m1621`, "meizu,m1621");
+- `libinit` reads the board from the DT compatible and runs the M681 vendor
+  profile on it (`ro.vendor.meizu.board=m1621`, `ro.vendor.meizu.profile=m681`);
+- SurfaceFlinger rotation 180, from the kernel (`forge_sf_hwrotation`);
+- the OTA package accepts the M1621 only (`color_type=M1621*`, `sw_version=621*`).
+
+Local manifest: `m1621.xml` in this branch.
+
+```sh
+mkdir -p .repo/local_manifests
+curl -L -o .repo/local_manifests/m1621.xml \
+  https://raw.githubusercontent.com/davemmi/android_device_meizu_m3note/lineage-20.0-m1621/m1621.xml
+repo sync -c
+source build/envsetup.sh
+breakfast m3note
+brunch m3note
+```
+
+Not yet built or installed on the phone.
+
+---
+
 # Meizu M3 Note (m3note)
 
 Device tree for the Meizu M3 Note for LineageOS 20.0.

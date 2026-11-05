@@ -113,12 +113,17 @@ std::string BoardFromCompatible(const std::string& compatible) {
         std::string candidate;
         if (token == "meizu,m681") candidate = "m681";
         if (token == "meizu,l681") candidate = "l681";
+        if (token == "meizu,m1621") candidate = "m1621";
         if (!candidate.empty()) {
             if (!board.empty() && board != candidate) return "";
             board = candidate;
         }
     }
     return board;
+}
+
+std::string ProfileForBoard(const std::string& board) {
+    return board == "m1621" ? "m681" : board;
 }
 
 bool ActivateProfile(const std::string& vendor, const std::string& board,

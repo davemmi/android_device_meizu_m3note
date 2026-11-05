@@ -7,9 +7,10 @@
 #
 #   M681:  color_type=M91<colour>             sw_version=6815<build>
 #   L681:  androidboot.cus_color=L91<colour>  androidboot.cus_param=0x6815<build>
+#   M1621: color_type=M1621<colour>           sw_version=621<build>  (M5 Note)
 #
 # Usage: check_board.sh <board>...
-# Exits 0 if this phone is one of the given boards (m681, l681), 1 otherwise.
+# Exits 0 if this phone is one of the given boards (m681, l681, m1621), 1 otherwise.
 
 color_type=
 sw_version=
@@ -29,6 +30,7 @@ board=unknown
 case "$color_type:$sw_version:$cus_color:$cus_param" in
     M91[A-Z]:6815*::) board=m681 ;;
     ::L91[A-Z]:0x6815*) board=l681 ;;
+    M1621[A-Z]:621*::) board=m1621 ;;
 esac
 
 echo "check_board: detected $board"

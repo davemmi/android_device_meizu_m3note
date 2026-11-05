@@ -4,9 +4,9 @@
 
 import common
 
-# Boards whose boot image this package carries: m3note_defconfig appends the
-# M681 device tree only.
-BOARDS = ("m681",)
+# Boards whose boot image this package carries: m5note_defconfig appends the
+# M1621 (Meizu M5 Note) device tree only.
+BOARDS = ("m1621",)
 
 
 def FullOTA_Assertions(info):
@@ -26,7 +26,7 @@ def AssertBoard(info):
   info.script.AppendExtra(
       'run_program("/sbin/sh", "/tmp/check_board.sh", %s) == 0 || '
       'run_program("/system/bin/sh", "/tmp/check_board.sh", %s) == 0 || '
-      'abort("E%d: This package is for the Meizu M3 Note %s; '
+      'abort("E%d: This package is for the Meizu M5 Note %s; '
       'this board is not supported.");'
       % (boards, boards, common.ErrorCode.DEVICE_MISMATCH,
          "/".join(b.upper() for b in BOARDS)))

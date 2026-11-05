@@ -61,8 +61,13 @@ void vendor_load_properties() {
         source = "dt";
     }
     std::string error;
+    // The M5 Note (m1621) has no factory handoff and no profile of its own:
+    // it is identified by its DT and runs the M681 vendor profile.
+    const std::string profile = meizu::ProfileForBoard(board);
+    if (!board.empty())
+        android::init::InitPropertySet("ro.vendor.meizu.board", board);
     if (board.empty() || board != meizu::BoardFromCompatible(compatible) ||
-        !meizu::ActivateProfile("/system/vendor", board, &error)) {
+        !meizu::ActivateProfile("/system/vendor", profile, &error)) {
         if (error == "profile rollback failed")
             LOG(FATAL) << "M3 Note vendor profile rollback failed";
         LOG(ERROR) << "M3 Note vendor profile unavailable: " << error;
@@ -70,10 +75,10 @@ void vendor_load_properties() {
         android::init::InitPropertySet("ro.vendor.meizu.profile_ready", "0");
         return;
     }
-    if (android::init::InitPropertySet("ro.vendor.meizu.profile", board) == 0)
+    if (android::init::InitPropertySet("ro.vendor.meizu.profile", profile) == 0)
         android::init::InitPropertySet("ro.vendor.meizu.profile_ready", "1");
     android::init::InitPropertySet("ro.vendor.meizu.profile_source", source);
     // Board-specific audio configuration: audio_get_configuration_paths()
     // (system/media audio_config.h) searches /vendor/etc/audio/sku_<sku> first.
-    android::init::InitPropertySet("ro.boot.product.vendor.sku", board);
+    android::init::InitPropertySet("ro.boot.product.vendor.sku", profile);
 }
