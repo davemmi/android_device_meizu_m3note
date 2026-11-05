@@ -80,6 +80,10 @@ TARGET_KERNEL_CLANG_COMPILE := false
 # Several MediaTek drivers switch features on TARGET_BUILD_VARIANT; the tested
 # kernel was built without it.
 TARGET_KERNEL_ADDITIONAL_FLAGS := MTK_PLATFORM=mt6755 TARGET_BUILD_VARIANT=
+# 4.9 links its single-file host tools (fixdep, ...) with HOSTCC and HOSTCFLAGS
+# only, not HOSTLDFLAGS, so clang looked for "ld", which the build PATH does
+# not carry. lld from the clang prebuilt instead; the rest is the 4.9 default.
+TARGET_KERNEL_ADDITIONAL_FLAGS += HOSTCFLAGS="-Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89 -fuse-ld=lld -Wno-unused-command-line-argument"
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/recovery.fstab
 # Mount points of the MTK data partitions in fstab.mt6755 (labels: sepolicy/vendor/file_contexts).
