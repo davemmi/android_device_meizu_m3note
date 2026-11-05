@@ -62,7 +62,8 @@ if [ "${1:-}" != "--inside" ]; then
     if [ "$mem_gb" -lt 30 ] && ! swapon --show | grep -q /swapfile; then
         fallocate -l 16G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
     fi
-    cp "$0" "$TOP/build_m1621_cloud.sh"
+    [ "$(readlink -f "$0")" = "$(readlink -f "$TOP/build_m1621_cloud.sh")" ] ||
+        cp "$0" "$TOP/build_m1621_cloud.sh"
     tmux kill-session -t los 2>/dev/null || true
     tmux new-session -d -s los "TOP=$TOP CCACHE=${CCACHE:-0} bash $TOP/build_m1621_cloud.sh --inside 2>&1 | tee -a $TOP/build.log; echo; echo 'Ende (Erfolg oder Fehler, siehe oben). Enter schliesst die Sitzung.'; read"
     echo "Build laeuft in der tmux-Sitzung 'los' (tmux attach -t los), Log: $TOP/build.log"
