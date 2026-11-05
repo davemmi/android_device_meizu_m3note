@@ -35,13 +35,22 @@ if [ "${1:-}" != "--inside" ]; then
     fi
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
-    apt-get install -y bc bison build-essential ccache curl flex g++-multilib \
-        gcc-multilib git git-lfs gnupg gperf imagemagick lib32readline-dev \
-        lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 \
-        libxml2-utils lzop pngcrush python3 python-is-python3 rsync \
-        schedtool squashfs-tools tmux xsltproc zip zlib1g-dev
-    # Android 13 host prebuilts still load libncurses.so.5 / libtinfo.so.5
-    apt-get install -y libncurses5 || apt-get install -y libncurses6 libtinfo6
+    apt-get install -y bc bison build-essential ccache curl flex git git-lfs \
+        gnupg gperf python3 rsync tmux zip
+    # Names differ between Ubuntu releases (22.04 ... 26.04): take the first
+    # candidate of each group that exists, skip a group with none.
+    for group in g++-multilib gcc-multilib imagemagick lib32readline-dev \
+            lib32z1-dev libelf-dev "lz4 liblz4-tool" libsdl1.2-dev \
+            "libsdl1.2-compat-dev libsdl1.2-dev" libssl-dev \
+            "libxml2-16 libxml2" libxml2-utils lzop pngcrush \
+            python-is-python3 schedtool squashfs-tools xsltproc zlib1g-dev \
+            "libncurses5 libncurses6" "libtinfo5 libtinfo6"; do
+        for pkg in $group; do
+            if apt-get install -y "$pkg" >/dev/null 2>&1; then
+                echo "installed $pkg"; break
+            fi
+        done
+    done
     curl -fsSL -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
     chmod a+x /usr/local/bin/repo
     git lfs install
