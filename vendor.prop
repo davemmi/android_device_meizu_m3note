@@ -57,3 +57,9 @@ persist.radio.fd.r8.counter=15
 persist.radio.fd.off.r8.counter=5
 persist.gemini.sim_num=2
 ro.gemini.smart_sim_switch=false
+
+# Bluetooth: the AOSP HIDL HAL (VendorInterface::Open) aborts without a
+# local address from ro.bt.bdaddr_path, persist.service.bdroid.bdaddr or
+# ro.boot.btmacaddr. libbt-vendor (bluetooth/bt_vendor.c) ignores it; the
+# chip takes its address from NVRAM, so a fixed placeholder is enough.
+persist.service.bdroid.bdaddr=02:4d:35:16:21:01
