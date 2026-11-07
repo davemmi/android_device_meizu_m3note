@@ -5,6 +5,9 @@
 /dev/block/mmcblk0p30 /cache ext4 noatime,nosuid,nodev,noauto_da_alloc,discard wait,check
 /dev/block/mmcblk0p11 /protect_f ext4 ro,nosuid,nodev wait
 /dev/block/mmcblk0p12 /protect_s ext4 ro,nosuid,nodev wait
+# Bootloader message (para, GPT p2): "reboot recovery" writes boot-recovery
+# here and LK honours it; TWRP (/misc -> para) clears it.
+/dev/block/mmcblk0p2 /misc emmc defaults defaults
 # NVRAM data (calibration, BT/Wi-Fi addresses): writable, as on stock.
 # nvram_daemon and libbluetooth_mtk (APCFG/APRDEB/BT_Addr) write here, and
 # init.m681.modem.rc copies the fstab into /data/nvram (-> /nvdata).

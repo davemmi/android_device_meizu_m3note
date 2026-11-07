@@ -32,8 +32,11 @@ on property:sys.boot_completed=1 && property:persist.vendor.m681.wmt.autostart=1
     start wmt_loader
     start wmt_launcher
 
-# M5 Note (m1621): CONSYS runs on this board, start it on every boot,
-# still after sys.boot_completed for the same reason.
-on property:sys.boot_completed=1 && property:ro.vendor.meizu.board=m1621
+# M5 Note (m1621): CONSYS runs on this board, start it on every boot as
+# soon as NVRAM is up (the Wi-Fi driver reads its calibration from there).
+# After sys.boot_completed was too late: the framework had already tried to
+# enable Wi-Fi without wlan0, showed it on, and only a second toggle
+# connected.
+on property:service.nvram_init=Ready && property:ro.vendor.meizu.board=m1621
     start wmt_loader
     start wmt_launcher
