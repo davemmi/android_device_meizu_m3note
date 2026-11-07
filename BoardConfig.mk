@@ -158,7 +158,13 @@ TARGET_LD_SHIM_LIBS += \
 
 # AudioSystem::get/setParameters for the MTK audio parameter parser (AppOps),
 # dlopened by audio.primary.mt6755.so; see shims/audiosystem_n.cpp.
+# android::CallStack for libaudiocomponentengine.so (bit converter, SRC),
+# dlopened by the same HAL; see shims/callstack_n.cpp.
 TARGET_LD_SHIM_LIBS += \
+    /vendor/lib/libaudiocomponentengine.so|/vendor/lib/libm3note_n_audio.so \
+    /vendor/lib64/libaudiocomponentengine.so|/vendor/lib64/libm3note_n_audio.so \
+    /system/vendor/lib/libaudiocomponentengine.so|/system/vendor/lib/libm3note_n_audio.so \
+    /system/vendor/lib64/libaudiocomponentengine.so|/system/vendor/lib64/libm3note_n_audio.so \
     /vendor/lib/libaudio_param_parser.so|/vendor/lib/libm3note_n_audio.so \
     /vendor/lib64/libaudio_param_parser.so|/vendor/lib64/libm3note_n_audio.so \
     /system/vendor/lib/libaudio_param_parser.so|/system/vendor/lib/libm3note_n_audio.so \

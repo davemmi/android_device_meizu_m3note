@@ -68,7 +68,10 @@ cc_library_shared {
 cc_library_shared {
     name: "libm3note_n_audio",
     vendor: true,
-    srcs: ["audiosystem_n.cpp"],
+    srcs: [
+        "audiosystem_n.cpp",
+        "callstack_n.cpp",
+    ],
     header_libs: ["libutils_headers"],
     shared_libs: ["libutils"],
 }
