@@ -31,3 +31,9 @@ on property:vendor.m681.wmt.start=1
 on property:sys.boot_completed=1 && property:persist.vendor.m681.wmt.autostart=1 && property:ro.vendor.meizu.profile=m681
     start wmt_loader
     start wmt_launcher
+
+# M5 Note (m1621): CONSYS runs on this board, start it on every boot,
+# still after sys.boot_completed for the same reason.
+on property:sys.boot_completed=1 && property:ro.vendor.meizu.board=m1621
+    start wmt_loader
+    start wmt_launcher
