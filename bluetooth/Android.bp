@@ -4,9 +4,12 @@
 // libbt-vendor.so, but the stock firmware has only a 32-bit one, so a 64-bit
 // libbt-vendor.so forwards to the 64-bit libbluetooth_mtk.so.  See bt_vendor.c.
 //
-// The service is a copy of hardware/interfaces/bluetooth/1.0/default/service.cpp
-// with its own rc: disabled + interface line, so hwservicemanager starts it only
-// when the framework asks for IBluetoothHci/default, which is declared in
+// The service builds in a copy of hardware/interfaces/bluetooth/1.0/default
+// (hal/) instead of loading the passthrough impl: vendor_interface.cc drops
+// the Command Complete events the MTK firmware sends for vendor opcodes nobody
+// sent (0xFCBD after a pairing), on which the GD stack aborts. Own rc:
+// disabled + interface line, so hwservicemanager starts it only when the
+// framework asks for IBluetoothHci/default, which is declared in
 // vintf/manifest_m681.xml only.
 
 cc_library_shared {
@@ -25,7 +28,13 @@ cc_binary {
     relative_install_path: "hw",
     vendor: true,
     init_rc: ["android.hardware.bluetooth@1.0-service.m3note.rc"],
-    srcs: ["service.cpp"],
+    srcs: [
+        "service.cpp",
+        "hal/bluetooth_hci.cc",
+        "hal/bluetooth_address.cc",
+        "hal/vendor_interface.cc",
+    ],
+    local_include_dirs: ["hal"],
     shared_libs: [
         "liblog",
         "libcutils",
@@ -35,5 +44,9 @@ cc_binary {
         "libhardware",
         "libhidlbase",
         "android.hardware.bluetooth@1.0",
+    ],
+    static_libs: [
+        "android.hardware.bluetooth-async",
+        "android.hardware.bluetooth-hci",
     ],
 }

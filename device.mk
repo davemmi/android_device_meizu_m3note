@@ -121,7 +121,6 @@ PRODUCT_PACKAGES += \
 # Bluetooth: AOSP passthrough HCI impl, a lazy service declared only in
 # vintf/manifest_m681.xml, and the 64-bit libbt-vendor.so it dlopen()s.
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.0-impl \
     android.hardware.bluetooth@1.0-service.m3note \
     libm3note_btvendor
 
