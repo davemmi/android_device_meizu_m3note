@@ -70,7 +70,11 @@ BOARD_MKBOOTIMG_ARGS := --board 1480869018 --ramdisk_offset $(BOARD_RAMDISK_OFFS
 BOARD_BOOT_HEADER_VERSION := 0
 BOARD_INCLUDE_DTB_IN_BOOTIMG :=
 BOARD_INCLUDE_RECOVERY_DTBO :=
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.hardware=mt6755 androidboot.selinux=permissive androidboot.usb.config=adb buildvariant=userdebug clk_ignore_unused forge_boot_deadline=0
+# LK keeps only about the first 99 characters of this line (the kernel sees
+# "... androidboot.usb.c" and then LK's own additions), so the parameters
+# that matter come first. LK adds androidboot.hardware itself;
+# clk_ignore_unused never reached the kernel and stays out.
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 forge_boot_deadline=0 androidboot.selinux=permissive androidboot.usb.config=adb buildvariant=userdebug
 TARGET_NO_KERNEL := false
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64

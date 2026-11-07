@@ -28,7 +28,13 @@ on property:vendor.m681.wmt.start=1
 # Opt-in boot start: persist.vendor.m681.wmt.autostart=1 starts the chain on
 # every M681 boot after sys.boot_completed, so a CONSYS hang cannot cause a
 # boot loop.  Bluetooth and Wi-Fi need it.
-on property:sys.boot_completed=1 && property:persist.vendor.m681.wmt.autostart=1 && property:ro.vendor.meizu.profile=m681
+# (M3 boards only: the M5 Note starts the chain itself below, and a second
+# wmt_loader run oopsed older kernels.)
+on property:sys.boot_completed=1 && property:persist.vendor.m681.wmt.autostart=1 && property:ro.vendor.meizu.board=m681
+    start wmt_loader
+    start wmt_launcher
+
+on property:sys.boot_completed=1 && property:persist.vendor.m681.wmt.autostart=1 && property:ro.vendor.meizu.board=l681
     start wmt_loader
     start wmt_launcher
 
