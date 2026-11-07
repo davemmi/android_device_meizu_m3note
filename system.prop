@@ -31,3 +31,9 @@ log.tag.RIL-UFP=I
 # jemalloc rounds up; a sampled allocation is exact and would trip the
 # shim's size check.
 libc.debug.gwp_asan.process_sampling.android.hardware.camera.provider@2.4-service=0
+
+# Plain-text XML in /data/system (Android 12+ default is binary ABX). The
+# recoveries in use (4pda TWRP 3.3.1) parse /data/system/storage.xml at
+# start and loop forever on ABX ("Error parsing XML file ... ABX"); this
+# showed once the M5 microSD made vold write storage.xml.
+persist.sys.binary_xml=false
