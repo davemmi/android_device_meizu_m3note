@@ -7,3 +7,21 @@ on boot
 # baud, which busy-waits the printing CPU.
 on property:sys.boot_completed=1
     write /proc/bootprof 0
+
+# Kernel heartbeat: one log line every 500 ms during boot; afterwards only
+# its last-beat slot (survives a reset) is kept.
+on property:sys.boot_completed=1
+    write /sys/module/forge_m681_marker/parameters/forge_hb_log 0
+
+# zram swap (768 MB, fstab.mt6755) with LZ4; the algorithm must be set
+# before swapon_all sets the disk size.
+on property:sys.boot_completed=1
+    write /sys/block/zram0/comp_algorithm lz4
+    swapon_all /vendor/etc/fstab.mt6755
+
+# The kernel arms cpufreq ~150 s after boot (big <= 1196 / LL <= 689 MHz at
+# the 1.000 V the bootloader sets). setprop persist.vendor.cpufreq.autoarm 0
+# keeps it off from the next boot on (manual arm:
+# echo 1 > /sys/module/mt_cpufreq/parameters/forge_mt_cpufreq).
+on property:persist.vendor.cpufreq.autoarm=0
+    write /sys/module/mt_cpufreq/parameters/forge_mt_cpufreq_autoarm 0
