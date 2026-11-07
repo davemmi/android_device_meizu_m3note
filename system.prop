@@ -40,8 +40,10 @@ persist.sys.binary_xml=false
 
 # Bluetooth profiles. Android 13 starts only the profiles enabled here
 # (AdapterServiceConfig); without them only GATT runs and there is no
-# Bluetooth share target, no HID and no PAN. A2DP, AVRCP and HFP wait for
-# working audio (the Bluetooth audio path runs in the audio HAL).
+# Bluetooth share target, no HID and no PAN. A2DP and AVRCP play through
+# the Bluetooth audio HAL (M5 Note audio policy); HFP (SCO) is not set up.
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
 bluetooth.profile.bas.client.enabled=true
 bluetooth.profile.gatt.enabled=true
 bluetooth.profile.hid.device.enabled=true
@@ -51,3 +53,5 @@ bluetooth.profile.opp.enabled=true
 bluetooth.profile.pan.nap.enabled=true
 bluetooth.profile.pan.panu.enabled=true
 bluetooth.profile.pbap.server.enabled=true
+# No A2DP offload DSP: software encoding through the Bluetooth audio HAL.
+persist.bluetooth.a2dp_offload.disabled=true

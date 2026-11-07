@@ -196,6 +196,10 @@
         <!-- No a2dp module: the stock audio.a2dp.default.so uses the legacy
              bluedroid A2DP interface and crashes the audio service when dumped.
              A2DP on Android 13 goes through the Bluetooth audio HAL. -->
+        <!-- M1621: A2DP/hearing aid through the Bluetooth audio HAL
+             (android.hardware.bluetooth.audio-impl, loaded by the audio
+             service; audio.bluetooth.default). -->
+        <xi:include href="/vendor/etc/bluetooth_audio_policy_configuration.xml"/>
         <xi:include href="/vendor/etc/usb_audio_policy_configuration.xml"/>
         <xi:include href="/vendor/etc/r_submix_audio_policy_configuration.xml"/>
     </modules>
