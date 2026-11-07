@@ -7,3 +7,5 @@
 /dev/block/mmcblk0p12 /protect_s ext4 ro,nosuid,nodev wait
 /dev/block/mmcblk0p7 /nvdata ext4 ro,nosuid,nodev wait
 /dev/block/zram0 none swap defaults zramsize=805306368
+# microSD slot (MSDC1, M5 Note kernel): vold-managed public volume
+/devices/*11240000.msdc1* auto auto defaults voldmanaged=sdcard1:auto
