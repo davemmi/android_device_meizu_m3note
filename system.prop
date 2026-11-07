@@ -37,3 +37,17 @@ libc.debug.gwp_asan.process_sampling.android.hardware.camera.provider@2.4-servic
 # start and loop forever on ABX ("Error parsing XML file ... ABX"); this
 # showed once the M5 microSD made vold write storage.xml.
 persist.sys.binary_xml=false
+
+# Bluetooth profiles. Android 13 starts only the profiles enabled here
+# (AdapterServiceConfig); without them only GATT runs and there is no
+# Bluetooth share target, no HID and no PAN. A2DP, AVRCP and HFP wait for
+# working audio (the Bluetooth audio path runs in the audio HAL).
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.gatt.enabled=true
+bluetooth.profile.hid.device.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.pbap.server.enabled=true
