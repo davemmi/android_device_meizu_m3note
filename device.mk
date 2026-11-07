@@ -180,6 +180,7 @@ AUDIO_POLICY_CFG_DIR := frameworks/av/services/audiopolicy/config
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy_configuration_m681.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_m681/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/audio_policy_configuration_l681.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_l681/audio_policy_configuration.xml \
+    $(LOCAL_PATH)/audio/audio_policy_configuration_m1621.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_m1621/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/audio_policy_configuration_m681.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(AUDIO_POLICY_CFG_DIR)/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml \
     $(AUDIO_POLICY_CFG_DIR)/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \

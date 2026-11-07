@@ -125,9 +125,12 @@ TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
 # VINTF
 # Per-SKU manifests, selected by ro.boot.product.vendor.sku: keymaster differs.
-DEVICE_MANIFEST_SKUS := m681 l681
+DEVICE_MANIFEST_SKUS := m681 l681 m1621
 DEVICE_MANIFEST_M681_FILES := $(DEVICE_PATH)/vintf/manifest_m681.xml
 DEVICE_MANIFEST_L681_FILES := $(DEVICE_PATH)/vintf/manifest_l681.xml
+# M5 Note: the M681 vendor profile, so the M681 manifest; an own SKU only
+# for its audio policy (speaker).
+DEVICE_MANIFEST_M1621_FILES := $(DEVICE_PATH)/vintf/manifest_m681.xml
 
 # Shims
 # N-ABI shims for the legacy blobs, plus liblog for the MTK loaders.  /vendor

@@ -80,5 +80,8 @@ void vendor_load_properties() {
     android::init::InitPropertySet("ro.vendor.meizu.profile_source", source);
     // Board-specific audio configuration: audio_get_configuration_paths()
     // (system/media audio_config.h) searches /vendor/etc/audio/sku_<sku> first.
-    android::init::InitPropertySet("ro.boot.product.vendor.sku", profile);
+    // The M5 Note runs the M681 profile but has a speaker (AW8738), so it
+    // gets its own SKU (audio policy; its VINTF manifest is the M681 one).
+    android::init::InitPropertySet("ro.boot.product.vendor.sku",
+                                   board == "m1621" ? board : profile);
 }
