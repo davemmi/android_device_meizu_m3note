@@ -7,9 +7,10 @@ service vendor.bluetooth-1-0-m3note /vendor/bin/hw/android.hardware.bluetooth@1.
     class hal
     capabilities BLOCK_SUSPEND NET_ADMIN SYS_NICE
     user bluetooth
-    # net_bt_stack: libbluetooth_mtk reads the address from
-    # /data/nvram/APCFG/APRDEB/BT_Addr (root:net_bt_stack 0660); system for
-    # the rest of the NVRAM tree. Without them it falls back to 00:00:46:03:26:01.
-    group bluetooth net_bt_stack system
+    # 3008 (the old AID_NET_BT_STACK, no name on Android 13, ls shows
+    # oem_3008): libbluetooth_mtk reads the address from
+    # /data/nvram/APCFG/APRDEB/BT_Addr (root:3008 0660); system for the rest
+    # of the NVRAM tree. Without them it falls back to 00:00:46:03:26:01.
+    group bluetooth 3008 system
     task_profiles HighPerformance
     disabled
