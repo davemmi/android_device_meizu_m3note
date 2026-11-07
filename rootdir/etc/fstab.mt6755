@@ -5,7 +5,10 @@
 /dev/block/mmcblk0p30 /cache ext4 noatime,nosuid,nodev,noauto_da_alloc,discard wait,check
 /dev/block/mmcblk0p11 /protect_f ext4 ro,nosuid,nodev wait
 /dev/block/mmcblk0p12 /protect_s ext4 ro,nosuid,nodev wait
-/dev/block/mmcblk0p7 /nvdata ext4 ro,nosuid,nodev wait
+# NVRAM data (calibration, BT/Wi-Fi addresses): writable, as on stock.
+# nvram_daemon and libbluetooth_mtk (APCFG/APRDEB/BT_Addr) write here, and
+# init.m681.modem.rc copies the fstab into /data/nvram (-> /nvdata).
+/dev/block/mmcblk0p7 /nvdata ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check
 /dev/block/zram0 none swap defaults zramsize=805306368
 # microSD slot (MSDC1, M5 Note kernel): vold-managed public volume
 /devices/*11240000.msdc1* auto auto defaults voldmanaged=sdcard1:auto
