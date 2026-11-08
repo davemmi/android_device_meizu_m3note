@@ -212,3 +212,14 @@ cc_library_shared {
     compile_multilib: "32",
     srcs: ["mnld_mutex_n.c"],
 }
+cc_library_shared {
+    name: "libm3note_gnss_navmsg",
+    vendor: true,
+    compile_multilib: "64",
+    srcs: ["gnss_navmsg_n.c"],
+    shared_libs: ["libdl"],
+    nocrt: true,
+    stl: "none",
+    system_shared_libs: [],
+    cflags: ["-ffreestanding", "-fno-builtin", "-fno-stack-protector"],
+}

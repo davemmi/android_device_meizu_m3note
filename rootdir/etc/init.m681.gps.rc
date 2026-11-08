@@ -35,3 +35,17 @@ on property:init.svc.wmt_launcher=running && property:ro.vendor.meizu.profile_re
 
 on property:init.svc.wmt_launcher=stopped
     stop mnld
+
+# Navigation messages crash the N GNSS HAL (NULL legacy callback in the AOSP
+# gnss@1.0-impl) and mnld (get_gnss_navigation_event) as soon as an app such
+# as GPS Test listens for them; the preload hides that extension
+# (shims/gnss_navmsg_n.c).  Same definition as
+# android.hardware.gnss@1.0-service.rc plus the preload; this file sorts after
+# it in /vendor/etc/init.
+service vendor.gnss_service /vendor/bin/hw/android.hardware.gnss@1.0-service
+    override
+    interface android.hardware.gnss@1.0::IGnss default
+    class hal
+    user gps
+    group system gps radio
+    setenv LD_PRELOAD /vendor/lib64/libm3note_gnss_navmsg.so
