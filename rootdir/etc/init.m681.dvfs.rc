@@ -4,7 +4,7 @@
 # Only these properties lift it; the kernel nodes are module parameters, so
 # they can be written before cpufreq arms and take effect when it does.
 #
-#   persist.vendor.m681.cpu_max   1196 (default) | stock (LL 1001 / big 1807)
+#   persist.vendor.m681.cpu_max   1196 (default; m1621: stock) | stock (LL 1001 / big 1807)
 #   persist.vendor.m681.cpu_mode  auto (default: interactive + touch boost) |
 #                                 performance (min = max; thermal limits still apply)
 #   persist.vendor.m681.ll_oc     0 (default) .. 5: highest LL overclock row,
@@ -15,6 +15,12 @@
 # that applies it marks persist.vendor.m681.cpu_trial=1, an orderly
 # shutdown/reboot clears it. If the previous boot never cleared it, this boot
 # drops cpu_max back to 1196 (cpu_max_fallback records why).
+
+# M5 Note (m1621, M681 profile): stock ceiling by default, tested
+# 2026-11-08 (FY efuse, big 1807 / LL 1001, 52 C under load). Only an unset
+# property is filled in, so a fallback to 1196 or a user choice stays.
+on property:ro.persistent_properties.ready=true && property:ro.vendor.meizu.board=m1621
+    setprop persist.vendor.m681.cpu_max ${persist.vendor.m681.cpu_max:-stock}
 
 # snapshot of the last boot's mark, once the persist properties are loaded
 on property:ro.persistent_properties.ready=true && property:ro.vendor.meizu.profile=m681
