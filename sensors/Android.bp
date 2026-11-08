@@ -1,0 +1,16 @@
+// M5 Note (M1621) sensors HAL: ICM-20608-D accelerometer and gyroscope on
+// the kernel's IIO inv_mpu6050 driver. Selected by ro.hardware.sensors=m1621
+// (vendor.prop); the M3 Invensense MPL sensors.mt6755.so needs the
+// out-of-tree DMP driver and stays unused on this board.
+cc_library_shared {
+    name: "sensors.m1621",
+    vendor: true,
+    relative_install_path: "hw",
+    compile_multilib: "64",
+    srcs: ["sensors_icm20608.c"],
+    shared_libs: ["liblog"],
+    nocrt: true,
+    stl: "none",
+    system_shared_libs: ["libc"],
+    cflags: ["-ffreestanding", "-fno-builtin", "-fno-stack-protector"],
+}

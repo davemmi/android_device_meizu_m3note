@@ -63,3 +63,7 @@ ro.gemini.smart_sim_switch=false
 # ro.boot.btmacaddr. libbt-vendor (bluetooth/bt_vendor.c) ignores it; the
 # chip takes its address from NVRAM, so a fixed placeholder is enough.
 persist.service.bdroid.bdaddr=02:4d:35:16:21:01
+
+# ICM-20608-D on the IIO inv_mpu6050 driver (sensors/): hw_get_module picks
+# sensors.m1621.so before the M3 sensors.mt6755.so blob.
+ro.hardware.sensors=m1621

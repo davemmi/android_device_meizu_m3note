@@ -121,6 +121,7 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-service \
     android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service \
+    sensors.m1621 \
     android.hardware.wifi@1.0-service \
     libwifi-hal-mt66xx \
     wificond
