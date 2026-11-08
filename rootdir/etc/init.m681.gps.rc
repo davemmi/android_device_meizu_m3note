@@ -23,6 +23,8 @@ on post-fs-data
 
 service mnld /vendor/bin/mnld
     class main
+    # libmnl.so destroys a mutex twice; bionic would abort (shims/mnld_mutex_n.c)
+    setenv LD_PRELOAD /vendor/lib/libm3note_n_mnld.so
     user gps
     group gps inet misc sdcard_rw sdcard_r media_rw system radio
     socket mnld stream 660 gps system

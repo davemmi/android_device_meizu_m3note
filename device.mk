@@ -59,7 +59,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/init.m681.modem.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.m681.modem.rc
 
 # Shims
-PRODUCT_PACKAGES += libm3note_n_gui libm3note_n_base libm3note_n_ui libm3note_n_perfservice libm3note_n_region libm3note_n_audio
+PRODUCT_PACKAGES += libm3note_n_gui libm3note_n_base libm3note_n_ui libm3note_n_perfservice libm3note_n_region libm3note_n_audio libm3note_n_mnld
 # Empty vendor libmedia.so: audio.primary.mt6755.so needs it by name.
 PRODUCT_PACKAGES += libm3note_n_media
 # RIL shims: the LD shim of mtk-ril.so/librilmtk.so and the vendor

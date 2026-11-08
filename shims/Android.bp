@@ -206,3 +206,9 @@ cc_library_shared {
     stem: "libicui18n",
     srcs: ["fwd_stub.c"],
 }
+cc_library_shared {
+    name: "libm3note_n_mnld",
+    vendor: true,
+    compile_multilib: "32",
+    srcs: ["mnld_mutex_n.c"],
+}
