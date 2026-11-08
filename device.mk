@@ -9,6 +9,11 @@ PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
+# Dalvik heap (M3 Note 2/3 GB, M5 Note 3/4 GB): without it the runtime
+# falls back to a 16 MB app heap and larger apps (F-Droid, Aurora Store)
+# die with OutOfMemoryError.
+$(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
