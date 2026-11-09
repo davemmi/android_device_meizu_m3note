@@ -7,8 +7,13 @@
 #  - the mux starts on mtk.md1.status=ready; rild starts with it and retries
 #    until /dev/radio/ptty* exist.
 #
-# MD1 only: the C2K side (MD3, viarild, rilproxy) is not started.  Service
-# names as stock: ccci_mdinit starts/stops ril-daemon-mtk by name.
+# Service names as stock: ccci_mdinit starts/stops ril-daemon-mtk by name.
+# The C2K RIL (viarild, rilproxy) is not started.
+#
+# M5 Note (m1621): its ulwctg MD1 asserts in mdipc cc_irq.c unless the C2K
+# modem (MD3) runs too, so MD3 gets its own ccci_mdinit/ccci_fsd instance
+# (argument 2, stock names ccci3_*; ccci_mdinit 2 starts "ccci3_fsd" by
+# name). LK loads both images; the kernel boots them (eccci1/mt6755).
 
 on post-fs-data && property:ro.vendor.meizu.profile=m681
     setprop ril.muxreport 0
@@ -31,6 +36,10 @@ on post-fs-data && property:ro.vendor.meizu.profile=m681
 
 on property:service.nvram_init=Ready && property:ro.vendor.meizu.profile=m681
     start ccci_mdinit
+
+on property:service.nvram_init=Ready && property:ro.vendor.meizu.board=m1621
+    start ccci3_fsd
+    start ccci3_mdinit
 
 on property:mtk.md1.status=ready && property:ro.vendor.meizu.profile=m681
     chown radio radio /dev/ttyC0
@@ -56,6 +65,20 @@ service ccci_fsd /vendor/bin/ccci_fsd 0
     oneshot
 
 service ccci_mdinit /vendor/bin/ccci_mdinit 0
+    class main
+    user root
+    group radio system
+    disabled
+    oneshot
+
+service ccci3_fsd /vendor/bin/ccci_fsd 2
+    class main
+    user radio
+    group radio system
+    disabled
+    oneshot
+
+service ccci3_mdinit /vendor/bin/ccci_mdinit 2
     class main
     user root
     group radio system
