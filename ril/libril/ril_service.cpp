@@ -4440,7 +4440,8 @@ IccIoResult responseIccIo(RadioResponseInfo& responseInfo, int serial, int respo
 	result.sw2 = resp->sw2;
 	char *forgeLegacy = forgeFcpToLegacy(resp->simResponse);
 	if (forgeLegacy != NULL) {
-	    result.simResponse = convertCharPtrToHidlString(forgeLegacy);
+	    // Own the converted header: the HIDL callback runs after this buffer is freed.
+	    result.simResponse = forgeLegacy;
 	    free(forgeLegacy);
 	} else {
 	    result.simResponse = convertCharPtrToHidlString(resp->simResponse);
